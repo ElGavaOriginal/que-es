@@ -10,27 +10,33 @@ Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vi
 
 > **Project update — October 2026:** This video documents the original Spring 2026 academic presentation, including limitations encountered at that time. Since recording, the project has been migrated to an Apple Silicon Mac and both YOLOv8 and MobileNet have been verified in live mode. Updated screenshots and a new local benchmark appear below. The original presentation has been preserved rather than rerecorded.
 
+
 ## Demonstration
 
-### Everyday vocabulary
+### Everyday Vocabulary
 
-![MobileNet detects a bowl, cup and fork and shows Spanish labels](media/screenshots/mobilenet-table-closeup.png)
+![MobileNet detects a bowl, cup, and fork with Spanish vocabulary labels](media/screenshots/mobilenet-table-closeup.png)
 
-*MobileNet identifying a bowl (`un tazón`), cup (`una taza`), and fork (`un tenedor`).*
+*MobileNet identifying una mesa (`una mesa`), a bowl (`un tazón`), cup (`una taza`), and fork (`un tenedor`).*
 
-### Multiple objects and plural phrases
+### Multiple Objects and Plural Phrases
 
-![MobileNet detects chairs, a dining table and a plant](media/screenshots/mobilenet-dining-room.png)
+![MobileNet detects chairs, a dining table, and a plant](media/screenshots/mobilenet-dining-room.png)
 
-*Dining-room detections show multiple categories and phrases such as `tres sillas`.*
+*Dining-room detections showing multiple object categories and Spanish plural phrases such as `tres sillas`.*
 
-### Computer workstation
+### Computer Workstation
 
 ![MobileNet identifies a laptop and keyboard](media/screenshots/mobilenet-workstation.png)
 
-*Workstation detections include `una computadora` and `un teclado`.*
+*Workstation detections including `una computadora` and `un teclado`.*
 
-**[View the full presentation on YouTube](https://youtu.be/Af26Plr84lI)** — discussion of motivation, related work, design decisions, experiments, and initial limitations.
+**[Watch the full project presentation on YouTube](https://youtu.be/Af26Plr84lI)**
+
+The original 15-minute presentation discusses the project's educational motivation, related research, architecture, design decisions, experiments, and initial limitations.
+
+**October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both YOLOv8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
+
 
 ## What the application does
 
