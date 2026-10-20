@@ -2,7 +2,7 @@
 
 **Computer Vision · Deep Learning Inference · Spanish Vocabulary · Python**
 
-**¿Qué es?** (*What is it?*) is a webcam-based computer vision application that detects selected everyday objects and overlays Spanish vocabulary labels. It combines **pretrained object detectors** with a **rule-based Spanish label mapper** that handles grammatical gender and singular/plural forms based on detected object counts.
+**¿Qué es?** (*What is it?*) is a webcam-based computer vision application that detects selected everyday objects and overlays Spanish vocabulary labels. It combines **pre-trained object detectors** with a **rule-based Spanish label mapper** that handles grammatical gender and singular/plural forms based on detected object counts. Understanding gender and plural forms in Spanish grammar are integral in Spanish I and II, as they set the foundation for effective and authentic communication in the target language. 
 
 Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vision**, Northeastern University (Spring 2026). The project explores connecting objects in a learner's surroundings with Spanish vocabulary, drawing on the author's background in language education.
 
@@ -27,13 +27,13 @@ Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vi
 
 *Workstation detections including `una computadora` and `un teclado`.*
 
-**October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both YOLOv8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
+**October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both v8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
 
 
 ## What the application does
 
 - Captures frames from a webcam with **OpenCV**.
-- Runs either **YOLOv8 Nano** (Ultralytics) or **SSDLite320 MobileNetV3-Large** (torchvision) using pretrained weights.
+- Runs either **v8 Nano** (Ultralytics) or **SSDLite320 MobileNetV3-Large** (torchvision) using pretrained weights.
 - Filters detections by confidence threshold and a configurable list of **20 supported COCO object categories**.
 - Converts detected class labels into manually mapped Spanish nouns, with appropriate singular/plural forms and gender-based articles for singular labels.
 - Displays bounding boxes, vocabulary phrases, detection confidence, model name, detection count, and live FPS.
@@ -51,7 +51,7 @@ The application is organized into small modules:
 | Module | Responsibility |
 |---|---|
 | `src/camera.py` | Webcam opening, reading and safe release |
-| `src/detector.py` | Common detector interface and YOLOv8/MobileNet implementations |
+| `src/detector.py` | Common detector interface and v8/MobileNet implementations |
 | `src/spanish_mapper.py` | COCO class → Spanish singular/plural noun, gender and number phrase |
 | `src/display.py` | Bounding boxes, labels, heads-up display and snapshots |
 | `src/evaluator.py` | Inference benchmarks and CSV reporting |
@@ -81,14 +81,14 @@ For multiple instances of the same class, the current display repeats the same c
 
 Both models were run against **50 captured webcam frames** on an Apple Silicon MacBook Pro, using the application's local benchmark mode.
 
-| Metric | YOLOv8 Nano | MobileNet SSD |
+| Metric | v8 Nano | MobileNet SSD |
 |---|---:|---:|
 | Average inference time | 20.45 ms | 181.77 ms |
 | Inference throughput* | 48.90 FPS | 5.50 FPS |
 | Total detections across frames | 200 | 148 |
 | Mean reported detection confidence | 70.2% | 85.3% |
 
-YOLOv8 achieved approximately **8.9× the measured inference throughput** of MobileNet in this particular run. MobileNet's detections had a higher mean reported confidence, **not necessarily higher accuracy**.
+v8 achieved approximately **8.9× the measured inference throughput** of MobileNet in this particular run. MobileNet's detections had a higher mean reported confidence, **not necessarily higher accuracy**.
 
 *FPS here is computed from average inference time, excluding camera capture and display overhead. Detection counts include repeat sightings of the same objects across frames. This benchmark uses no manually annotated ground truth, so it does **not** establish precision, recall, mAP, or accuracy. Results depend on scene, hardware, device backend and package versions.*
 
@@ -115,7 +115,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-YOLOv8 Nano and torchvision model weights are obtained through their respective libraries when needed; weight files are not committed to this repository.
+v8 Nano and torchvision model weights are obtained through their respective libraries when needed; weight files are not committed to this repository.
 
 ## Run
 
