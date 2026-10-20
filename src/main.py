@@ -9,8 +9,8 @@ It initializes the camera, loads the object detection models, and runs the main 
 capture frames, run inference, and displays the results with Spanish labels. 
 
 This file can benchmark the performance with either YOLO(v8) or MobileNetDetector 
-implementations.  It records accuracy with a confidence score, speed with FPS,
-and detection counts for each target object. The results are printed on the terminal and saved
+implementations.  It records a confidence score, speed with FPS, and detection counts 
+for each target object. The results are printed on the terminal and saved
 to a CSV file for later analysis. 
 
 CONTROLS: 
