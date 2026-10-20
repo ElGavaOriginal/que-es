@@ -107,7 +107,7 @@ YOLOv8 achieved approximately **8.9× the measured inference throughput** of Mob
 - Internet access on first run to obtain pretrained model weights
 - macOS Apple Silicon was tested; other environments may require adaptation
 
-Clone the repository **after it has been published**:
+Clone the repository:
 
 ```bash
 git clone https://github.com/ElGavaOriginal/que-es.git
