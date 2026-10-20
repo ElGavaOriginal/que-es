@@ -169,7 +169,6 @@ que-es/
 └── README.md
 ```
 
-The diagrams and screenshots listed above should be copied/renamed to these paths before publishing.
 
 ## Limitations and possible extensions
 
