@@ -2,7 +2,9 @@
 
 **Computer Vision · Deep Learning Inference · Spanish Vocabulary · Python**
 
-**¿Qué es?** (*What is it?*) is a webcam-based computer vision application that detects selected everyday objects and overlays Spanish vocabulary labels. It combines **pre-trained object detectors** with a **rule-based Spanish label mapper** that handles grammatical gender and singular/plural forms based on detected object counts. Understanding gender and plural forms in Spanish grammar are integral in Spanish I and II, as they set the foundation for effective and authentic communication in the target language. 
+During my tenure teaching Spanish as a Second Language (SSL), I noticed how studies in the humanities were slow in being included in the newest technologies. I lived through the implementation of LLMs, computer vision, speech recognition, and computer vision into a host of corporate and commercial applications, and I often found myself wondering when they would be applied to my professional field. My background made me interested in how technology can help people learn another language. For this project, Wanted to explore whether computer vision could help learners connect everyday objects with Spanish vocabulary and their definite articles: the/a/an/some. 
+
+**¿Qué es?** (*What is it?*) is a webcam-based computer vision application that detects selected everyday objects and overlays Spanish vocabulary labels. It combines **pre-trained object detectors** with a **rule-based Spanish label mapper** that handles grammatical gender and singular/plural forms based on detected object counts. Understanding gender and plural forms in Spanish grammar are integral to Spanish I and II, as they set the foundation for effective and authentic communication in the target language. 
 
 Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vision**, Northeastern University (Spring 2026). The project explores connecting objects in a learner's surroundings with Spanish vocabulary, drawing on the author's background in language education.
 
