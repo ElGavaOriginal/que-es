@@ -6,10 +6,6 @@
 
 Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vision**, Northeastern University (Spring 2026). The project explores connecting objects in a learner's surroundings with Spanish vocabulary, drawing on the author's background in language education.
 
-**[Watch the original project presentation (15 min)](https://youtu.be/Af26Plr84lI)**
-
-> **Project update — October 2026:** This video documents the original Spring 2026 academic presentation, including limitations encountered at that time. Since recording, the project has been migrated to an Apple Silicon Mac and both YOLOv8 and MobileNet have been verified in live mode. Updated screenshots and a new local benchmark appear below. The original presentation has been preserved rather than rerecorded.
-
 
 ## Demonstration
 
@@ -30,10 +26,6 @@ Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vi
 ![MobileNet identifies a laptop and keyboard](media/screenshots/mobilenet-workstation.png)
 
 *Workstation detections including `una computadora` and `un teclado`.*
-
-**[Watch the full project presentation on YouTube](https://youtu.be/Af26Plr84lI)**
-
-The original 15-minute presentation discusses the project's educational motivation, related research, architecture, design decisions, experiments, and initial limitations.
 
 **October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both YOLOv8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
 
