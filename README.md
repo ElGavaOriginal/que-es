@@ -6,12 +6,22 @@ During my tenure teaching Spanish as a Second Language (SSL), I noticed how stud
 
 **¿Qué es?** (*What is it?*) is a webcam-based computer vision application that detects selected everyday objects and overlays Spanish vocabulary labels. It combines **pre-trained object detectors** with a **rule-based Spanish label mapper** that handles grammatical gender and singular/plural forms based on detected object counts. Understanding gender and plural forms in Spanish grammar are integral to Spanish I and II, as they set the foundation for effective and authentic communication in the target language. 
 
-Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vision**, Northeastern University (Spring 2026). The project explores connecting objects in a learner's surroundings with Spanish vocabulary, drawing on the author's background in language education.
+Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vision**, Northeastern University (Spring 2026). The project explores connecting objects in a learner's surroundings with Spanish vocabulary and their articles, drawing on the author's background in language education.
 
 
 ## Demonstration
 
+**[Watch the full project presentation on YouTube](https://youtu.be/Af26Plr84lI)**
+
+The original 15-minute presentation discusses the project's educational motivation, related research, architecture, design decisions, experiments, and initial limitations. The original presentation has been preserved rather than rerecorded. 
+
+**October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both YOLOv8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
+
+
 ### Everyday Vocabulary
+The following screenshots document the original project demonstration. The updated implementation replaces numerical labels with definite and indefinite Spanish articles, that can be selected by toggling with the **A** key. 
+
+
 
 ![MobileNet detects a bowl, cup, and fork with Spanish vocabulary labels](media/screenshots/mobilenet-table-closeup.png)
 
@@ -29,17 +39,17 @@ Created by **Ruben A. Salido** for **CS5330: Pattern Recognition and Computer Vi
 
 *Workstation detections including `una computadora` and `un teclado`.*
 
-**October 2026 update:** Since the original presentation, the application has been successfully migrated to Apple Silicon. Both v8 Nano and MobileNet SSD have been verified in live detection and benchmarking modes.
-
 
 ## What the application does
 
 - Captures frames from a webcam with **OpenCV**.
 - Runs either **v8 Nano** (Ultralytics) or **SSDLite320 MobileNetV3-Large** (torchvision) using pretrained weights.
 - Filters detections by confidence threshold and a configurable list of **20 supported COCO object categories**.
-- Converts detected class labels into manually mapped Spanish nouns, with appropriate singular/plural forms and gender-based articles for singular labels.
-- Displays bounding boxes, vocabulary phrases, detection confidence, model name, detection count, and live FPS.
+- Converts detected class labels into manually mapped Spanish nouns, with appropriate singular/plural forms and gender-based articles for singular amd plural labels.
+- Displays bounding boxes, Spanish vocabulary phrases, detection confidence, model name, live FPS, and keyboard controls.
+- Switches from **definite** to **indefinite** articles with the **A** key. 
 - Saves annotated screenshots with the **S** key.
+- Exits the program with the **Q** or **Esc** keys. 
 - Benchmarks both models on the same captured webcam frames, reporting inference time, throughput, detection counts, and average confidence.
 
 **Important distinction:** The object detectors are pretrained neural networks; the Spanish vocabulary and grammar logic is **deterministic**, not a trained NLP model or LLM. The project does not train its own detection model.
@@ -66,18 +76,18 @@ The application is organized into small modules:
 
 ## Spanish vocabulary mapping
 
-The curated vocabulary draws on everyday object terms used in the *Senderos* Spanish textbook. Mappings specify singular and plural nouns and grammatical gender; the program uses indefinite articles by default for singular objects and number words for counts greater than one. The mapper also has definite-article mappings, although live mode does not expose a control to switch article types.
+The curated vocabulary draws on everyday object terms used in the *Senderos* Spanish textbook. The Spanish vocabulary mapper assigns grammatical gender and number to detected objects and allows users to switch between definite and indefinite articles. The mappings account for selected lexical exceptions and conventional usage rather than relying exclusively on automatic pluralization rules. 
 
 | COCO label | One detected object | Multiple detected objects |
 |---|---|---|
-| `book` | `un libro` | `dos libros` |
-| `chair` | `una silla` | `tres sillas` |
-| `couch` | `un sofá` | `dos sofás` |
-| `bowl` | `un tazón` | `dos tazones` |
-| `potted plant` | `una planta` | `cuatro plantas` |
-| `laptop` | `una computadora` | `dos computadoras` |
+| `book` | `un libro` | `unos libros` |
+| `chair` | `una silla` | `unas sillas` |
+| `couch` | `un sofá` | `unos sofás` |
+| `bowl` | `un tazón` | `unos tazones` |
+| `potted plant` | `una planta` | `unas plantas` |
+| `laptop` | `una computadora` | `unas computadoras` |
 
-For multiple instances of the same class, the current display repeats the same count-based phrase on each corresponding detection. Number words are mapped through ten; larger counts use numerals.
+For multiple instances of the same class, the current display article and noun agreement on each corresponding detection.
 
 ## Model comparison — October 2026
 
@@ -102,6 +112,7 @@ v8 achieved approximately **8.9× the measured inference throughput** of MobileN
 - macOS Apple Silicon was tested; other environments may require adaptation
 
 Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/ElGavaOriginal/que-es.git
@@ -125,7 +136,7 @@ v8 Nano and torchvision model weights are obtained through their respective libr
 make run             # YOLOv8 live detection
 make run-mobilenet   # MobileNet live detection
 make evaluate        # compare both models on 50 webcam frames
-make test            # run the included configuration tests
+make test            # run configuration and Spanish grammar unit tests
 ```
 
 To choose a different benchmark frame count:
@@ -134,7 +145,7 @@ To choose a different benchmark frame count:
 PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python src/main.py --model compare --frames 100
 ```
 
-In a live OpenCV window, press **S** to save a snapshot or **Q**/**Esc** to quit. Automatically captured images are saved in `snapshots/`; the default benchmark writes `benchmark_results.csv` in the project root. These generated outputs are ignored by Git.
+In a live OpenCV window, press **A** to switch article use, **S** to save a snapshot, or **Q**/**Esc** to quit. Automatically captured images are saved in `snapshots/`; the default benchmark writes `benchmark_results.csv` in the project root.
 
 ## Repository layout
 
@@ -150,6 +161,7 @@ que-es/
 │   └── spanish_mapper.py
 ├── test/
 │   └── test_config.py
+│   └── test_spanish_mapper.py
 ├── media/
 │   ├── screenshots/
 │   │   ├── mobilenet-table-closeup.png
@@ -162,7 +174,6 @@ que-es/
 ├── requirements.txt
 └── README.md
 ```
-
 
 ## Limitations and possible extensions
 

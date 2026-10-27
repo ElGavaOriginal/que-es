@@ -4,7 +4,7 @@
 # Originally developed: Spring 2026
 """
 This file benchmarks the performance of the YOLO(v8) and MobileNetDetector implementations 
-on a set of captured frames. It records accuracy with a confidence score, speed with FPS,
+on a set of captured frames. It records a confidence score, speed with FPS,
 and detection counts for each target object. The results are printed on the terminal and saved
 to a CSV file for later analysis. 
 
@@ -35,7 +35,7 @@ class ModelEvaluator:
     """
 
 
-    def __init__(self, frame_count: int = 50, output_path: str = "benchmark_results.csv"):  # not sure about frame_count: int = 50, yet.
+    def __init__(self, frame_count: int = 50, output_path: str = "benchmark_results.csv"):
         """
         Args:
             frame_count: Number of frames to capture and benchmark on.

@@ -28,7 +28,7 @@ class DisplayManager:
         display = DisplayManager()
         annotated_frame = display.draw(frame, detections, spanish_labels)
         display.show(annotated_frame)
-        if display.should_quit():
+        if display.get_key() in (ord("q")), ord ("Q"), 27):
             break
     """
 
@@ -98,17 +98,15 @@ class DisplayManager:
         return frame
 
 
-    def draw_hud(self, frame, model_name: str,
-                 detection_count: int, fps: float) -> object:
+    def draw_hud(self, frame, model_name: str, fps: float) -> object:
         """
-        Draws a HUD in the top-left corner that shows the active
-        model name, number of detections, and current FPS. This makes
-        it easier to compare YOLO and MobileNet performance in real-timel.
+        Draws a HUD in the top-left corner that shows the active model,
+        model name, and current FPS. This makes it easier to compare 
+        YOLO and MobileNet performance in real-time.
 
         Args:
             frame:           BGR numpy array.
             model_name:      "YOLO" or "MobileNet".
-            detection_count: Total detections in the current frame.
             fps:             Current frames per second.
 
         Returns:
@@ -116,31 +114,35 @@ class DisplayManager:
         """
         hud_lines = [
             f"Model: {model_name}",
-            f"Detections: {detection_count}",
             f"FPS: {fps:.1f}",
-            "Press Q to quit",
+            "A: toggle article | S: snapshot | Q: quit",
         ]
 
         y_start = 30
         line_gap = 28
-        hud_color = (200, 200, 200)  # light gray
         hud_scale = 0.6
         hud_weight = 1
 
+        widths = [
+            cv2.getTextSize(line, self.FONT, hud_scale, hud_weight)[0][0]
+            for line in hud_lines
+        ]
+        panel_w = max(widths) + 36
+        panel_h = y_start + line_gap * (len(hud_lines))
+
+        overlay = frame.copy()
+        cv2.rectangle(overlay, (0, 0), (panel_w, panel_h), (0, 0, 0),  cv2.FILLED)
+        cv2.addWeighted(overlay, 0.55, frame, 0.45, 0, frame)
+
         for i, line in enumerate(hud_lines):
             y = y_start + i * line_gap
-            # Thin dark shadow for contrast against any background
-            cv2.putText(
-                frame, line, (11, y + 1),
-                self.FONT, hud_scale, (0, 0, 0), hud_weight + 1, cv2.LINE_AA
-            )
+            #White text on dark panel
             cv2.putText(
                 frame, line, (10, y),
-                self.FONT, hud_scale, hud_color, hud_weight, cv2.LINE_AA
+                self.FONT, hud_scale, (255, 255, 255), hud_weight + 1, cv2.LINE_AA
             )
 
         return frame
-
 
     def show(self, frame):
         """
@@ -159,6 +161,7 @@ class DisplayManager:
         Safe to call even if the window was never opened.
         """
         cv2.destroyAllWindows()
+
 
     def get_key(self) -> int:
         """

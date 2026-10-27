@@ -9,13 +9,14 @@ It initializes the camera, loads the object detection models, and runs the main 
 capture frames, run inference, and displays the results with Spanish labels. 
 
 This file can benchmark the performance with either YOLO(v8) or MobileNetDetector 
-implementations.  It records a confidence score, speed with FPS, and detection counts 
-for each target object. The results are printed on the terminal and saved
+implementations.  It records a confidence score, speed with FPS,
+and detection counts for each target object. The results are printed on the terminal and saved
 to a CSV file for later analysis. 
 
 CONTROLS: 
-     S      -Saves a snapshot as a numbered PNG file
-     Q/Esc  - Quit the application
+     A      - Toggles the article type between indefinite (un/una) and definite (el/la)
+     S      - Saves a snapshot as a numbered PNG file
+     Q/Esc  - Quits the application
 
 To run on Mac with MPS fallback (for Apple Silicon): 
     PYTORCH_ENABLE_MPS_FALLBACK=1 .venv/bin/python src/main.py --model yolo
@@ -121,11 +122,12 @@ def run_live(model_name: str):
     mapper = SpanishLabelMapper()
     display = DisplayManager()
     model_label = "YOLO" if model_name == "yolo" else "MobileNet"
+    article_type = "indefinite"
     fps = 0.0
     frame_time = time.perf_counter()
 
-    print(f"Running LIVE mode with [model_label]")
-    print(f"Press S to save, Q/Esc to quit.")
+    print(f"Running LIVE mode with {model_label}")
+    print("Press A to toggle article type, S to save, Q/Esc to quit.")
 
     with CameraStream() as cam:
         while True:
@@ -135,10 +137,10 @@ def run_live(model_name: str):
 
             detections = detector.detect(frame)
             counts = detector.count_detections(detections)
-            spanish_labels = mapper.get_all_labels(counts)
+            spanish_labels = mapper.get_all_labels(counts, article_type)
             annotated = display.draw(frame, detections, spanish_labels)
             annotated = display.draw_hud(
-            annotated, model_label, len(detections), fps
+                annotated, model_label, fps
             )
 
             display.show(annotated)
@@ -153,6 +155,8 @@ def run_live(model_name: str):
                 path = get_next_snapshot_path()
                 display.save_snapshot(annotated, path)
                 print(f"saved: {path}")
+            elif key in (ord("a"), ord("A")):
+                article_type = "definite" if article_type == "indefinite" else "indefinite"
             elif key in (ord("q"), ord("Q"), 27):
                 break
     display.close()

@@ -5,9 +5,9 @@
 
 
 """
- This function defines the ObjectDetector base class and two concrete implementations:
+ This file defines the ObjectDetector base class and two concrete implementations:
    - YOLODetector    (YOLOv8 via ultralytics)
-   - MobileNetDetector (MobileNet SSD v2 via torchvision)
+   - MobileNetDetector (SSDLite320 with MobileNetV3-Large)
 
  Both subclasses return detections in the same format:
    [
@@ -78,8 +78,7 @@ class ObjectDetector(ABC):
     def count_detections(self, detections: list[dict]) -> dict:
         """
         Counts how many instances of each label appear in a detection list.
-        This is used to generate the summary text in the HUD overlay. Making it 
-        easier to compare YOLO and MobileNet performance in real-time.
+        SpanishLabelMapper uses these counts to choose singular or plural articles.
 
         Args:
             detections: List of detection dicts from detect().
@@ -141,7 +140,10 @@ class YOLODetector(ObjectDetector):
         detections = []
 
         for result in results:
-            for box in result.boxes:
+            boxes = getattr(result, "boxes", None)
+            if boxes is None:
+                continue
+            for box in boxes:
                 class_id   = int(box.cls[0])
                 confidence = float(box.conf[0])
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
